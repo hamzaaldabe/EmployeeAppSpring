@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Aspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(Aspect.class);
+
 
     @Before("@annotation(LogMethodCall)")
     public void logMethodCall(JoinPoint joinPoint) {
-        logger.info("Method {} is called.", joinPoint.getSignature().getName());
+        System.out.println("Method "+ joinPoint.getSignature().getName()+" is called." );
     }
 
     @Around("@annotation(MeasureExecutionTime)")
@@ -23,7 +23,7 @@ public class Aspect {
         long startTime = System.currentTimeMillis();
         Object result = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
-        logger.info("Method {} took {}ms to execute.", joinPoint.getSignature().getName(), (endTime - startTime));
+        System.out.println("Method " + joinPoint.getSignature().getName() + " took " +  (endTime - startTime) + "ms to execute. ");
         return result;
     }
 }
